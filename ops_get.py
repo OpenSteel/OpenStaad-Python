@@ -20,6 +20,7 @@ def make_variant_vt_ref(obj, var_type):
 os = client.GetActiveObject("StaadPro.OpenSTAAD")
 
 geometry = os.Geometry
+property = os.Property
 
 geometry._FlagAsMethod("GetLastNodeNo")
 geometry._FlagAsMethod("GetNodeCoordinates")
@@ -92,3 +93,97 @@ def GetSelectedNodes():
     geometry.GetSelectedNodes(lista)
 
     return (lista[0])
+
+geometry._FlagAsMethod("GetBeamLength")
+geometry._FlagAsMethod("GetBeamList")
+geometry._FlagAsMethod("GetBeamsConnectedAtNode")
+geometry._FlagAsMethod("GetCountOfBreakableBeamsAtSpecificNodes")
+geometry._FlagAsMethod("GetIntersectBeamsCount")
+geometry._FlagAsMethod("GetLastBeamNo")
+geometry._FlagAsMethod("GetMemberCount")
+geometry._FlagAsMethod("GetMemberIncidence")
+geometry._FlagAsMethod("GetMemberIncidence_CIS2")
+geometry._FlagAsMethod("GetMemberUniqueID")
+geometry._FlagAsMethod("GetNoOfBeamsConnectedAtNode")
+geometry._FlagAsMethod("GetNoOfSelectedBeams")
+geometry._FlagAsMethod("GetSelectedBeams")
+
+def GetBeamLength(beam):
+    return geometry.GetBeamLength(beam)
+
+def GetBeamList():
+    beams = GetMemberCount()
+    safe_list = make_safe_array_long(beams)
+    lista = make_variant_vt_ref(safe_list,  automation.VT_ARRAY | automation.VT_I4)
+
+    geometry.GetBeamList(lista)
+
+    return (lista[0])
+
+def GetBeamsConnectedAtNode():
+    return
+
+def GetCountOfBreakableBeamsAtSpecificNodes():
+    pass
+
+def GetIntersectBeamsCount():
+    pass
+
+def GetLastBeamNo():
+    return geometry.GetLastBeamNo()
+
+def GetMemberCount():
+    return geometry.GetMemberCount()
+
+def GetMemberIncidence(beam):
+    safe_n1 = make_safe_array_long(1)
+    x = make_variant_vt_ref(safe_n1,  automation.VT_I4)
+
+    safe_n2 = make_safe_array_long(1)
+    y = make_variant_vt_ref(safe_n2,  automation.VT_I4)
+
+    geometry.GetMemberIncidence(beam,x,y)
+
+    return (x[0],y[0])
+
+def GetMemberIncidence_CIS2():
+    pass
+
+def GetMemberUniqueID():
+    pass
+
+def GetNoOfBeamsConnectedAtNode():
+    pass
+
+def GetNoOfSelectedBeams():
+    return geometry.GetNoOfSelectedBeams()
+def GetSelectedBeams():
+    n_beams = GetNoOfSelectedBeams()
+    safe_list = make_safe_array_long(n_beams)
+    lista = make_variant_vt_ref(safe_list,  automation.VT_ARRAY | automation.VT_I4)
+
+    geometry.GetSelectedBeams(lista)
+
+    return (lista[0])
+
+
+geometry._FlagAsMethod("GetGroupEntityCount")
+geometry._FlagAsMethod("GetGroupEntities")
+
+property._FlagAsMethod("GetBeamSectionName")
+
+def GetGroupEntityCount(group_name):
+    return geometry.GetGroupEntityCount(group_name)
+
+def GetGroupEntities(group_name):
+    beams = GetGroupEntityCount(group_name)
+    safe_list = make_safe_array_long(beams)
+    lista = make_variant_vt_ref(safe_list,  automation.VT_ARRAY | automation.VT_I4)
+    
+    geometry.GetGroupEntities(group_name,lista)
+    
+    return lista[0]
+
+def GetBeamSectionName(beam):
+    return property.GetBeamSectionName(beam)
+
